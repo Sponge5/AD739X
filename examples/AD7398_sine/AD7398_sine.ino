@@ -1,10 +1,10 @@
 /* --------------------------------------------------------------
-  Example sketch of sine generator. 
+  Example sketch of sine generator.
 
   Author: Christoph Jurczyk
  -------------------------------------------------------------- */
 
-#include <AD7390.h>
+#include <AD7398.h>
 
 // Pins
 #define DAC_CS 8
