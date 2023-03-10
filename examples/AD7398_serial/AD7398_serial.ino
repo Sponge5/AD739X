@@ -36,14 +36,34 @@ void setup() {
 void loop() {
     if(Serial.available())
     {
+        int channel = read_int();
+        switch(channel)
+        {
+            case CHANNEL_A:
+                Serial.println("Output: CHANNEL A");
+                break;
+            case CHANNEL_B:
+                Serial.println("Output: CHANNEL B");
+                break;
+            case CHANNEL_C:
+                Serial.println("Output: CHANNEL C");
+                break;
+            case CHANNEL_D:
+                Serial.println("Output: CHANNEL D");
+                break;
+            default:
+                Serial.println("WRONG OUTPUT, SETTING CHANNEL A");
+                channel = CHANNEL_A;
+                break;
+        }
+        Serial.print("Choose value: ");
         int newValue = read_int();
-        Serial.print("Read: ");
         Serial.println(newValue);
         uint16_t dacValue = ((uint16_t)newValue) & 0x0FFF;
-        Serial.print("Set: ");
+        Serial.print("Setting value: ");
         Serial.println(dacValue);
         /* set dac */
-        dac.writeValue(CHANNEL_A, dacValue);
+        dac.writeValue((enum Channel)channel, dacValue);
         delay(10);
         Serial.print(analogRead(A0));
         Serial.println(" A0");
