@@ -1,12 +1,7 @@
-/* --------------------------------------------------------------
-	Arduino Library for the Analog Devives AD7390 12-bit DAC
-
-	Author: Christoph Jurczyk
- -------------------------------------------------------------- */
-
-#include "Arduino.h"
-#include "AD7398.h"
+#include <Arduino.h>
 #include <SPI.h>
+
+#include "AD739X.h"
 
 AD7398::AD7398(int cs_pin, int latch_pin)
 {
@@ -22,25 +17,24 @@ AD7398::AD7398(int cs_pin, int latch_pin)
     SPI.begin();
 }
 
-uint8_t AD7398::writeValue(enum Channel channel, uint16_t value)
+uint8_t AD7398::writeValue(enum AD7398::Channel channel, uint16_t value)
 {
     if(value > 0x0FFF)
         return 1;
-    value &= 0x0FFF;
     /* transfer data */
     switch(channel)
     {
         case CHANNEL_A:
-            value |= CHANNEL_A_ADDR;
+            value |= CHANNEL_A_ADDRESS;
             break;
         case CHANNEL_B:
-            value |= CHANNEL_B_ADDR;
+            value |= CHANNEL_B_ADDRESS;
             break;
         case CHANNEL_C:
-            value |= CHANNEL_C_ADDR;
+            value |= CHANNEL_C_ADDRESS;
             break;
         case CHANNEL_D:
-            value |= CHANNEL_D_ADDR;
+            value |= CHANNEL_D_ADDRESS;
             break;
     }
 	SPI.beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE3));
